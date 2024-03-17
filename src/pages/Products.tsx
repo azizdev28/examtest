@@ -4,19 +4,21 @@ import Loading from "../components/Loading";
 import { Button, Table, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { ProductType } from "../types/Product.type";
+import Pagination from "../components/Pagination";
 
 const Products: React.FC = () => {
   const { loading, getProducts, products, deleteProduct, updateProduct } =
     useProduct();
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [editedProduct, setEditedProduct] = useState<ProductType | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const productsPerPage = 4;
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const handleDelete = (id: number) => {
-    // console.log(id);
     deleteProduct(id);
   };
 
@@ -45,6 +47,19 @@ const Products: React.FC = () => {
     }
   };
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="max-w-[1400px] mx-auto my-24 ml-56">
       <div className="flex justify-center w-full flex-col items-center">
@@ -63,7 +78,7 @@ const Products: React.FC = () => {
                 <Table.HeadCell>Delete</Table.HeadCell>
               </Table.Head>
               <Table.Body>
-                {products.map((product) => (
+                {currentProducts.map((product) => (
                   <Table.Row key={product.id}>
                     <Table.Cell className="w-[148px]">
                       <img
@@ -122,7 +137,7 @@ const Products: React.FC = () => {
                     </Table.Cell>
                     <Table.Cell className="w-[148px]">
                       {editingProductId === product.id ? (
-                        <Button color="blue" onClick={handleSave}>
+                        <Button onClick={handleSave} color="blue">
                           Save
                         </Button>
                       ) : (
@@ -148,6 +163,11 @@ const Products: React.FC = () => {
             </Table>
           )
         )}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
 
         <div className="flex w-full justify-center ">
           <Link
