@@ -1,0 +1,100 @@
+{
+  "students": [
+    {
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "johndoe@gmail.com",
+      "group": "React N32",
+      "id": "46138"
+    },
+    {
+      "name": "Abduhakimoff",
+      "username": "Aziz",
+      "email": "dasdasd@gmail.com",
+      "group": "React N25",
+      "id": "5718"
+    },
+    {
+      "id": "0b05",
+      "name": "John Doe",
+      "email": "tim@gmail.com",
+      "username": "johndoe",
+      "group": "React N32"
+    },
+    {
+      "id": "fa82",
+      "name": "Azizdev ",
+      "email": "bayof25625@jalunaki.com",
+      "username": "ID10403",
+      "group": "React N25"
+    },
+    {
+      "name": "Azizbek Abuhakimov",
+      "username": "ID10403",
+      "email": "dasdasd@gmail.com",
+      "group": "React N2",
+      "id": "61cf"
+    },
+    {
+      "id": "c680",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "group": "React N32"
+    },
+    {
+      "id": "1ee3",
+      "name": "Azizbek",
+      "email": "sarvar@gmail.com",
+      "username": "asdad",
+      "group": "React N2"
+    },
+    {
+      "id": "4be4",
+      "name": "Aziz",
+      "email": "az1z.bakht1yarvich@gmail.com",
+      "username": "Azizbek",
+      "group": "React N2"
+    }
+  ],
+  "teachers": [
+    {
+      "name": "Tom Smith",
+      "username": "tomsmith",
+      "email": "tomsmith@gmail.com",
+      "level": "senior",
+      "id": "41245"
+    },
+    {
+      "id": "602b",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "level": "Middle",
+      "group": " Junior"
+    },
+    {
+      "id": "1378",
+      "name": "Azizbek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "ID10403",
+      "level": "Middle",
+      "group": " Junior"
+    },
+    {
+      "id": "1629",
+      "name": "Aziz",
+      "email": "sarvar@gmail.com",
+      "username": "asdad",
+      "level": "Middle"
+    },
+    {
+      "id": "beaa",
+      "name": "Otabek",
+      "email": "bayof25625@gmail.com.com",
+      "username": "asdasd",
+      "level": "Middle",
+      "group": "Senior"
+    }
+  ]
+}
