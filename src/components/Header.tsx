@@ -8,9 +8,9 @@ const Header = () => {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
 
   return (
-    <div className="w-full">
-      <Navbar className="bg-gray-100">
-        <div className="w-full flex justify-end">
+    <div className="w-full  flex  justify-end">
+      <Navbar className="bg-gray-100 w-full flex  justify-end">
+        <div className="w-full flex  justify-end">
           {isLoggedIn ? (
             <Dropdown
               arrowIcon={false}

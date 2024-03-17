@@ -1,23 +1,69 @@
-import { Button, TextInput } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, FileInput, TextInput } from "flowbite-react";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { app } from "../../firebase";
 
 interface Product {
   title: string;
-  price: string;
+  price: number;
   avatar: string;
   category: string;
   description: string;
+  image: string;
 }
 
-const AddProducts: React.FC<{ addProduct: (product: Product) => void }> = ({
-  addProduct,
-}) => {
+const AddProducts: React.FC<{
+  addProduct: (product: Product) => void;
+}> = () => {
   const [title, setTitle] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
   const [avatar, setAvatar] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
+  const [product, setProduct] = useState<Product>({
+    title: "",
+    price: 0,
+    avatar: "",
+    category: "",
+    description: "",
+    image: "",
+  });
+
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const image = e.target.files[0];
+      setImage(image);
+      try {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + "-" + image.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, image);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(progress);
+          },
+          () => {},
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              setProduct({ ...product, image: downloadURL });
+            });
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   const addProductToAPI = async (product: Product) => {
     try {
@@ -33,9 +79,7 @@ const AddProducts: React.FC<{ addProduct: (product: Product) => void }> = ({
       );
       if (response.ok) {
         const data: Product = await response.json();
-        console.log("Prouct added:", data);
-
-        // Istalgan qo'shilgan mahsulotni ishlovchi logika
+        console.log("Product added:", data);
       } else {
         throw new Error("Failed to add product");
       }
@@ -44,30 +88,32 @@ const AddProducts: React.FC<{ addProduct: (product: Product) => void }> = ({
     }
   };
 
-  const navigate = useNavigate(); // useNavigate hook'ini import qilamiz
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!image) return; // Tasvir tanlanmagan holatda to'xtatish
     const newProduct: Product = {
-      title: title,
-      price: price,
-      avatar: avatar,
-      category: category,
-      description: description,
+      title,
+      price,
+      avatar,
+      category,
+      description,
+      image: product.image,
     };
-    addProductToAPI(newProduct); // Yangi mahsulotni mock API-ga yuborish
+    addProductToAPI(newProduct);
     setTitle("");
-    setPrice("");
+    setPrice(0);
     setAvatar("");
     setCategory("");
     setDescription("");
-
-    navigate("/products"); // O'zgarishlarni saqlashdan keyin /products sahifasiga o'tish
+    setImage(null); // Tasvirni o'chiramiz
+    navigate("/products");
   };
 
   return (
     <div className="w-[50%] mx-auto my-12">
-      <h2 className="text-4xl  text-gray-900 text-center">Add Product</h2>
+      <h2 className="text-4xl text-gray-900 text-center">Add Product</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label>
@@ -108,6 +154,19 @@ const AddProducts: React.FC<{ addProduct: (product: Product) => void }> = ({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </div>
+        <div>
+          <div className="max-w-2xl p-6 mx-auto">
+            <label htmlFor="" className="mb-3 block text-xl">
+              Product photo
+            </label>
+            <FileInput onChange={handleUploadImage} />
+            <div className="">
+              {product.image && (
+                <img src={product.image} alt="" className="w-80" />
+              )}
+            </div>
+          </div>
         </div>
         <Button type="submit">Add</Button>
       </form>

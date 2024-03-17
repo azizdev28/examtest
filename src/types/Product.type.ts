@@ -4,14 +4,16 @@ export type ProductType = {
   price: number;
   avatar: string;
   category: string;
-  description: string; // Changed property name from "level" to "level"
+  image: string;
+  description: string; // Changed property name from "lev el" to "level
 };
 
 export type ProductStoreType = {
   loading: boolean;
   products: ProductType[]; // Corrected property name from "teacher" to "teachers"
-  error: any;
   getProducts: () => void;
+  deleteProduct: (id: number) => void;
+  updateProduct: (product: ProductType) => void;
 };
 
 export type ProductInfo = {

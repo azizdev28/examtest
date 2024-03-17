@@ -22,7 +22,6 @@ const useProduct = create<ProductStoreType>((set) => ({
     } catch (err) {
       set(() => ({
         loading: false,
-        error: err,
       }));
     }
   },
@@ -45,7 +44,6 @@ const useProduct = create<ProductStoreType>((set) => ({
     } catch (err) {
       set(() => ({
         loading: false,
-        error: err,
       }));
     }
   },
@@ -74,7 +72,6 @@ const useProduct = create<ProductStoreType>((set) => ({
     } catch (err) {
       set(() => ({
         loading: false,
-        error: err,
       }));
     }
   },
