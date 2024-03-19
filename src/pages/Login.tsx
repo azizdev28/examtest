@@ -1,7 +1,7 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ const Login = () => {
     const storedUsername = localStorage.getItem("username");
     const storedPassword = localStorage.getItem("password");
     if (username === storedUsername && password === storedPassword) {
+      setIsLoggedIn(true); // setIsLoggedIn propertisini ishlatish
       navigate("/");
     } else {
       alert("Invalid username or password");
