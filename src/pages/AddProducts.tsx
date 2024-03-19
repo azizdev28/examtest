@@ -18,9 +18,7 @@ interface Product {
   image: string;
 }
 
-const AddProducts: React.FC<{
-  addProduct: (product: Product) => void;
-}> = () => {
+const AddProducts = () => {
   const [title, setTitle] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [avatar, setAvatar] = useState<string>("");
