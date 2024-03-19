@@ -1,3 +1,4 @@
+import { Button, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,21 +15,23 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <input
+    <div className="h-screen w-1/3 mx-auto gap-y-4 flex justify-center flex-col items-center">
+      <h2 className="text-bold-900 font-black text-3xl">Register</h2>
+      <TextInput
+        className="w-full"
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <input
+      <TextInput
+        className="w-full"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleRegister}>Register</button>
+      <Button onClick={handleRegister}>Register</Button>
     </div>
   );
 };
