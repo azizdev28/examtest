@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-const Login = ({ setIsLoggedIn }) => {
+interface TypeProps {
+  setIsLoggedIn: (isLoggedIn: boolean) => void;
+}
+const Login = ({ setIsLoggedIn }: TypeProps) => {
+  console.log(setIsLoggedIn);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
