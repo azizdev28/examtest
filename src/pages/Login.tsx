@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { Button, TextInput } from "flowbite-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 interface TypeProps {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
 }
 const Login = ({ setIsLoggedIn }: TypeProps) => {
-  console.log(setIsLoggedIn);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,22 +21,32 @@ const Login = ({ setIsLoggedIn }: TypeProps) => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <input
+    <div className="h-screen w-1/3 mx-auto gap-y-4 flex justify-center flex-col items-center">
+      <h2 className="text-bold-900 font-black text-3xl">Login to Page</h2>
+      <TextInput
+        className="w-full"
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <input
+      <TextInput
+        className="w-full"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
-      <Link to={"/register"}>Register</Link>
+      <div className="flex justify-between items-center w-full">
+        <Button onClick={handleLogin}>Login</Button>
+        <span>Click to register</span>
+        <Link
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-3.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          to={"/register"}
+        >
+          Register
+        </Link>
+      </div>
     </div>
   );
 };

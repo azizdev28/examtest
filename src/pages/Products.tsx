@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import useProduct from "../app/useProduct";
 import Loading from "../components/Loading";
 import { Button, Table, TextInput } from "flowbite-react";
@@ -12,6 +12,8 @@ const Products: React.FC = () => {
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
   const [editedProduct, setEditedProduct] = useState<ProductType | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Add searchTerm state
   const productsPerPage = 4;
 
   useEffect(() => {
@@ -47,14 +49,34 @@ const Products: React.FC = () => {
     }
   };
 
+  const handleChangeCategory = (e: ChangeEvent<HTMLSelectElement>) => {
+    const category = e.target.value;
+    setCurrentPage(1);
+    setSelectedCategory(category);
+  };
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts = selectedCategory
+    ? products.filter((product) => product.category === selectedCategory)
+    : products;
+
+  const searchedProducts = searchTerm
+    ? filteredProducts.filter((product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : filteredProducts;
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(
+  const currentProducts = searchedProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
-  const totalPages = Math.ceil(products.length / productsPerPage);
+  const totalPages = Math.ceil(searchedProducts.length / productsPerPage);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -63,6 +85,32 @@ const Products: React.FC = () => {
   return (
     <div className="max-w-[1400px] mx-auto my-24 ml-56">
       <div className="flex justify-center w-full flex-col items-center">
+        <div className="flex w-full justify-around">
+          <div className="mb-4">
+            <select
+              id="category"
+              className="border border-gray-300 rounded-md py-1 px-2"
+              value={selectedCategory}
+              onChange={handleChangeCategory}
+            >
+              <option value="">All</option>
+              <option value="Furniture">Furniture</option>
+              <option value="Homeware">Homeware</option>
+              <option value="Sofas">Sofas</option>
+              <option value="Light fittings">Light fittings</option>
+              <option value="Accessories">Accessories</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <TextInput
+              id="search"
+              type="text"
+              value={searchTerm}
+              onChange={handleSearch}
+              placeholder="Search..."
+            />
+          </div>
+        </div>
         {loading ? (
           <Loading />
         ) : (

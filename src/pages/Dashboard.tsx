@@ -24,8 +24,12 @@ const Dashboard = () => {
                   </h2>
                   <div className="w-12 h-1 bg-indigo-500 rounded mt-2 mb-4"></div>
                   <p className="text-base">
-                    Raclette knausgaard hella meggs normcore williamsburg enamel
-                    pin sartorial venmo tbh hot chicken gentrify portland.
+                    Website Intern tomonidan ishlab chiqildi bazi funksiyalar
+                    sekinroq ishlashish mumkin !!!
+                    <span className="font-black my-5 text-xl text-red-700">
+                      {" "}
+                      N32 Gruh Legenda
+                    </span>
                   </p>
                 </div>
               </div>
