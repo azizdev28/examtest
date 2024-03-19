@@ -15,14 +15,14 @@ const App = () => {
         <div className="w-full">
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="addproducts" element={<AddProducts />} />
+              <Route index element={<Dashboard />} />
               <Route path="products" element={<Products />} />
+              <Route path="addproducts" element={<AddProducts />} />
               <Route path="profile" element={<Profile />} />
             </Route>
 
             <Route path="register" element={<Register />} />
-            <Route path="login" element={<Login />} />
+            <Route index path="login" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
